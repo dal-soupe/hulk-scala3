@@ -1,4 +1,5 @@
 val scala3Version = "3.6.4"
+val akkaVersion = "2.8.8"
 
 lazy val root = project
   .in(file("."))
@@ -8,5 +9,9 @@ lazy val root = project
 
     scalaVersion := scala3Version,
 
-    libraryDependencies += "org.scalameta" %% "munit" % "1.0.0" % Test
+
+    libraryDependencies ++= Seq(
+      "org.scalameta" %% "munit" % "1.0.0" % Test,
+      "com.typesafe.akka" %% "akka-actor" % akkaVersion
+    )
   )
