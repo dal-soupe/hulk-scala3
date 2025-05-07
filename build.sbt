@@ -10,6 +10,8 @@ resolvers += "Akka library repository".at("https://repo.akka.io/maven")
 
 libraryDependencies ++= Seq(
   "org.scalameta" %% "munit" % "1.0.0" % Test,
-  "com.typesafe.akka" %% "akka-actor" % "2.8.8",
-  "com.typesafe.akka" %% "akka-slf4j"   % "2.8.8"
+  "com.typesafe.akka" %% "akka-actor" % akkaVersion,
+  "com.typesafe.akka" %% "akka-slf4j"   % akkaVersion,
+  "com.typesafe.akka" %% "akka-testkit" % akkaVersion % Test,
+  "org.scalatest" %% "scalatest" % "3.2.19" % Test
 )
