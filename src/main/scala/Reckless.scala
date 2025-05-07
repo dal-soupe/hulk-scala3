@@ -15,7 +15,7 @@ case object Active extends RecklessState
   * Reckless agent has behaviour a single-state machine which counts injured
   * @param bruce is his partner 
   */
-class Reckless(bruce: ActorRef) extends Actor with FSM[RecklessState, Int] with Stash:
+class Reckless(bruce: ActorRef) extends Actor, FSM[RecklessState, Int], Stash:
 
   startWith(Active, stateData = 0)
 
@@ -32,7 +32,7 @@ class Reckless(bruce: ActorRef) extends Actor with FSM[RecklessState, Int] with 
       bruce ! Flick
       stay()
     case Event(event, injured) =>
-      println(s"Reckless: -I do not understand this ${event.getClass} in state $stateName/$injured")
+      println(s"Reckless: -I do not understand this ${event.getClass()} in state $stateName/$injured")
       stay()
   }
 

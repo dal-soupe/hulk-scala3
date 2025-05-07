@@ -5,7 +5,7 @@ import akka.actor.*
 import scala.io.StdIn
 
 /**
-  * Test Bruce
+  * Test Bruce, exists if the user presses ENTER, else loops forever
   */
 object Main extends App:
 
@@ -23,9 +23,3 @@ object Main extends App:
     system.terminate()
     
   
-
-// @main def hello(): Unit =
-//   println("Hello world!")
-//   println(msg)
-
-// def msg = "I was compiled by Scala 3. :)"

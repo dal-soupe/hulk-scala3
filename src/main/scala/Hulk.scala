@@ -30,18 +30,18 @@ final case class Mind(patience: Int = 3)
 /**
   * Bruce is an agent, i.e. an actor with a behaviour and a state of mind
   */
-class Bruce extends Actor with FSM[BruceState, Mind]:
+class Bruce extends Actor, FSM[BruceState, Int]:
   // Bruce starts as Banner with patience
-  startWith(Banner, Mind())
+  startWith(Banner, stateData = 3)
 
   // When Bruce is Banner, the flicks decrease his patience until he becomes Hulk
   when(Banner) {
-    case Event(Flick, mind) if mind.patience > 0 =>
+    case Event(Flick, patience) if patience > 0 =>
       println("Bruce: -Hum...")
-      stay() using Mind(mind.patience-1)
-    case Event(Flick, mind) if mind.patience == 0 =>
+      stay() using patience - 1
+    case Event(Flick, patience) if patience == 0 =>
       println("Bruce: -Grr...")
-      goto(Hulk) using Mind(0) replying Warning
+      goto(Hulk) using 0 replying Warning
   }
 
   // When Bruce is Hulk, flicks imply a smash and he calms down, i.e. become Banner
@@ -52,12 +52,17 @@ class Bruce extends Actor with FSM[BruceState, Mind]:
         self ! Calm
       }
     case Event(Calm, _) =>
-      goto(Banner) using Mind()
+      goto(Banner) using 3
   }
 
   // Monitoring
   onTransition {
-    case from -> to=> println(s"Bruce was $from and he becomes $to")
+    case from -> to => println(s"Bruce was $from and he becomes $to")
+  }
+
+  // Bruce last message when he is terminated
+  onTermination { _ =>
+    println("Bruce: -I am sorry...")
   }
 
   // Initialize Bruce
